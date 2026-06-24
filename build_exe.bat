@@ -1,0 +1,13 @@
+@echo off
+echo Building PDF OCR Converter...
+echo Setting up a clean virtual environment to minimize EXE size...
+if exist build_env rmdir /s /q build_env
+python -m venv build_env
+call build_env\Scripts\activate
+echo Installing dependencies...
+pip install -r requirements.txt
+pip install pyinstaller
+echo Running PyInstaller...
+pyinstaller --name "PDF_OCR_Converter" --onefile --noconsole --icon="app.ico" --add-data "static;static" --hidden-import=aiofiles --hidden-import=python-multipart --hidden-import=uvicorn app.py
+call deactivate
+echo Build complete. Executable is in the dist/ folder.
